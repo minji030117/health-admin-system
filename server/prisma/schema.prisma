@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  replies   FeedbackReply[]
+}
+
+model AppUser {
+  id           String    @id @default(uuid())
+  deviceId     String    @unique
+  nickname     String?
+  plan         String    @default("FREE")
+  points       Int       @default(0)
+  greenRate    Float     @default(0)
+  lastActiveAt DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  feedbacks    Feedback[]
+  errorLogs    ErrorLog[]
+}
+
+model Feedback {
+  id        String          @id @default(uuid())
+  userId    String
+  category  String          @default("general")
+  title     String
+  content   String
+  status    String          @default("pending")
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  user      AppUser         @relation(fields: [userId], references: [id])
+  replies   FeedbackReply[]
+}
+
+model FeedbackReply {
+  id         String   @id @default(uuid())
+  feedbackId String
+  adminId    String
+  content    String
+  createdAt  DateTime @default(now())
+  feedback   Feedback @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
+  admin      Admin    @relation(fields: [adminId], references: [id])
+}
+
+model ErrorLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  level      String   @default("error")
+  message    String
+  stack      String?
+  screen     String?
+  appVersion String?
+  platform   String?
+  metadata   String?
+  createdAt  DateTime @default(now())
+  user       AppUser? @relation(fields: [userId], references: [id])
+}
+
+model RemoteConfig {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

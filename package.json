@@ -1,0 +1,10 @@
+{
+  "name": "health-admin-system",
+  "private": true,
+  "scripts": {
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "setup": "cd server && npx prisma generate && npx prisma db push && node prisma/seed.js"
+  }
+}
