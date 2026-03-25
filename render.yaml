@@ -3,7 +3,7 @@ services:
     name: health-admin-server
     runtime: node
     rootDir: server
-    buildCommand: npm install && npx prisma generate
+    buildCommand: npm install && npx prisma generate && cd ../client && npm install && npm run build
     startCommand: npx prisma migrate deploy && node src/index.js
     envVars:
       - key: DATABASE_URL
