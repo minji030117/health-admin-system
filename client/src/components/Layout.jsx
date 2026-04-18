@@ -6,6 +6,7 @@ const links = [
   { to: "/feedback", icon: "\u{1F4EC}", label: "\uC758\uACAC\uD568" },
   { to: "/errors", icon: "\u{1F6A8}", label: "\uC5D0\uB7EC \uB85C\uADF8" },
   { to: "/users", icon: "\u{1F465}", label: "\uC0AC\uC6A9\uC790 \uAD00\uB9AC" },
+  { to: "/accounts", icon: "\u{1F4CB}", label: "\uACC4\uC815 \uAD00\uB9AC" },
   { to: "/config", icon: "\u2699\uFE0F", label: "\uC6D0\uACA9 \uC124\uC815" },
 ];
 

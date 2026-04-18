@@ -38,4 +38,41 @@ module.exports = {
   async dashboard(req, res, next) {
     try { return ok(res, await svc.dashboard()); } catch (e) { next(e); }
   },
+
+  async changePlan(req, res, next) {
+    try {
+      const { plan } = req.body;
+      if (!plan) return fail(res, "plan 필수");
+      return ok(res, await svc.changePlan(req.params.id, plan), "플랜 변경 완료");
+    } catch (e) { next(e); }
+  },
+
+  async deleteUser(req, res, next) {
+    try {
+      await svc.deleteUser(req.params.id);
+      return ok(res, null, "사용자 삭제 완료");
+    } catch (e) { next(e); }
+  },
+
+  async bulkChangePlan(req, res, next) {
+    try {
+      const { ids, plan } = req.body;
+      if (!ids?.length || !plan) return fail(res, "ids, plan 필수");
+      return ok(res, await svc.bulkChangePlan(ids, plan), "일괄 플랜 변경 완료");
+    } catch (e) { next(e); }
+  },
+
+  async accountStats(req, res, next) {
+    try { return ok(res, await svc.accountStats()); } catch (e) { next(e); }
+  },
+
+  async searchUsers(req, res, next) {
+    try {
+      const { keyword, plan, sortBy, sortOrder, page, limit } = req.query;
+      return ok(res, await svc.searchUsers({
+        keyword, plan, sortBy, sortOrder,
+        page: +page || 1, limit: +limit || 30,
+      }));
+    } catch (e) { next(e); }
+  },
 };

@@ -8,6 +8,7 @@ import FeedbackPage from "./pages/FeedbackPage";
 import ErrorsPage from "./pages/ErrorsPage";
 import UsersPage from "./pages/UsersPage";
 import ConfigPage from "./pages/ConfigPage";
+import AccountsPage from "./pages/AccountsPage";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/feedback" element={<ProtectedRoute><FeedbackPage /></ProtectedRoute>} />
         <Route path="/errors" element={<ProtectedRoute><ErrorsPage /></ProtectedRoute>} />
         <Route path="/users" element={<ProtectedRoute><UsersPage /></ProtectedRoute>} />
+        <Route path="/accounts" element={<ProtectedRoute><AccountsPage /></ProtectedRoute>} />
         <Route path="/config" element={<ProtectedRoute><ConfigPage /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
